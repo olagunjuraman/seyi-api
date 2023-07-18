@@ -3,16 +3,17 @@ name: Deploy to EC2
 on:
   push:
     branches:
-      - develop # This can be replaced with your deployment branch
+      - main # This can be replaced with your deployment branch
 
 jobs:
-  deploy:
+   deploy:
     name: Deploy
     runs-on: ubuntu-latest
     environment:
       name: DEV
     env:
       PORT: 3001
+  
 
     steps:
       - name: Checkout code
@@ -53,7 +54,9 @@ jobs:
             -----END RSA PRIVATE KEY-----
           script: |
             cd ~/seyi-api # replace this with your actual project directory path
-            git pull origin develop
+            git pull origin main
             npm install
             pm2 stop index.js
             pm2 start index.js --name environment1 -i 1 --env dev -- -p ${{ env.PORT }}
+
+
